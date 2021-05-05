@@ -9,7 +9,8 @@
 #include <string>
 #include <iostream>
 
-class PieceTextures{
+class PieceTextures
+{
 public:
     static sf::Texture blackKing;
     static sf::Texture blackQueen;
