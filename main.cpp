@@ -9,11 +9,12 @@
 
 int main()
 {
-    ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff));
+    ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff)); // sets the color of the background
 
-    sf::RenderWindow window(sf::VideoMode(768, 512), "Chess", sf::Style::Titlebar | sf::Style::Close);
-    window.setVerticalSyncEnabled(true);
+    sf::RenderWindow window(sf::VideoMode(768, 512), "Chess Project", sf::Style::Titlebar | sf::Style::Close); // defines the resolution and title of the window
+    window.setVerticalSyncEnabled(true);                                                                       //v-sync to normalize frames into monitor refresh rate
 
+    // appliaction starts here
     while (window.isOpen())
     {
 
@@ -32,7 +33,6 @@ int main()
                     if ((0 <= event.mouseButton.x) && (event.mouseButton.x <= 512) && (0 <= event.mouseButton.y) && (event.mouseButton.y <= 512))
                     {
                         unsigned int buttonPos{(event.mouseButton.x / 64) + ((event.mouseButton.y / 64) * (8 * (512 / window.getSize().y)))};
-
                         if (!chess.getSelected())
                             chess.selectPiece(buttonPos);
                         else
