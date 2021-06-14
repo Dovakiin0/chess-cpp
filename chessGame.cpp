@@ -1801,7 +1801,6 @@ void ChessGame::checkMate()
             }
         }
 
-        //Bug fix
         // whitePieces[4] is white King , blackPieces[3] is black King
         Piece *curKing;
         if (playerTurn)
@@ -1866,7 +1865,7 @@ void ChessGame::checkMate()
                 }
             }
         }
-        //Bug fix
+
         if (check2 != NULL)
         {
             if ((check2->getType() == 'Q') || (check2->getType() == 'R' || (check2->getType() == 'B')))

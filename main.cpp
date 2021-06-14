@@ -12,6 +12,7 @@ int main()
     bool isGame = false;
     // MainMenu menu;
 
+    // appliaction starts here
     while (window.isOpen())
     {
         sf::Event event;
