@@ -3,6 +3,7 @@
 */
 
 #include "chessGame.h"
+#include <windows.h>
 
 ChessGame::ChessGame(sf::Color bordCol1 = sf::Color::White, sf::Color bordCol2 = sf::Color::Black)
     : board(bordCol1, bordCol2)
@@ -10,7 +11,6 @@ ChessGame::ChessGame(sf::Color bordCol1 = sf::Color::White, sf::Color bordCol2 =
     // The code is taking account of these indexes.
     // Changing them may brake normal chess rules.
     // Comment out pieces if you want to remove some pieces at beggining.
-
     font.loadFromFile("Textures/times.ttf");
 
     infoRestart.setFillColor(sf::Color::White);
@@ -43,8 +43,6 @@ ChessGame::ChessGame(sf::Color bordCol1 = sf::Color::White, sf::Color bordCol2 =
     textLastMove.setStyle(sf::Text::Bold);
     textLastMove.setFillColor(sf::Color::White);
     textLastMove.setPosition(530.f, 200.f);
-
-    restart();
 }
 
 void ChessGame::restart()
