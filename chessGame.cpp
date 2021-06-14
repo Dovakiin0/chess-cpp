@@ -43,6 +43,8 @@ ChessGame::ChessGame(sf::Color bordCol1 = sf::Color::White, sf::Color bordCol2 =
     textLastMove.setStyle(sf::Text::Bold);
     textLastMove.setFillColor(sf::Color::White);
     textLastMove.setPosition(530.f, 200.f);
+
+    restart();
 }
 
 void ChessGame::restart()
