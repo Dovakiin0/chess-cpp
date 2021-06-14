@@ -11,19 +11,19 @@ MainMenu::MainMenu()
     title.setString("Chess Game");
     title.setCharacterSize(50);
     title.setFillColor(sf::Color::White);
-    title.setPosition(sf::Vector2f(512 / 2, 0));
+    title.setPosition(sf::Vector2f(512 / 2, 100));
 
     menu[0].setFont(font);
-    menu[0].setFillColor(sf::Color::Blue);
+    menu[0].setFillColor(sf::Color::Red);
     menu[0].setString("Start Game");
     menu[0].setCharacterSize(30);
-    menu[0].setPosition(sf::Vector2f(512 / 2, 768 / (MAX_MAIN_MENU + 2))); // 256, 192
+    menu[0].setPosition(sf::Vector2f(512 / 2, 250));
 
     menu[1].setFont(font);
     menu[1].setFillColor(sf::Color::White);
     menu[1].setString("Exit");
     menu[1].setCharacterSize(30);
-    menu[1].setPosition(sf::Vector2f(512 / 2, 768 / (MAX_MAIN_MENU + 1))); // 256, 256
+    menu[1].setPosition(sf::Vector2f(512 / 2, 300));
     selectedMenu = 0;
 }
 
@@ -37,7 +37,7 @@ void MainMenu::moveDown()
     {
         menu[selectedMenu].setFillColor(sf::Color::White);
         selectedMenu++;
-        menu[selectedMenu].setFillColor(sf::Color::Blue);
+        menu[selectedMenu].setFillColor(sf::Color::Red);
     }
 }
 
@@ -47,7 +47,7 @@ void MainMenu::moveUp()
     {
         menu[selectedMenu].setFillColor(sf::Color::White);
         selectedMenu--;
-        menu[selectedMenu].setFillColor(sf::Color::Blue);
+        menu[selectedMenu].setFillColor(sf::Color::Red);
     }
 }
 
@@ -58,7 +58,7 @@ int MainMenu::getSelectedMenu()
 
 void MainMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    // target.draw(backSprite);
+    target.draw(backSprite);
     target.draw(title);
     for (int i = 0; i < 2; i++)
     {
