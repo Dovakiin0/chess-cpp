@@ -1,52 +1,87 @@
-/*
-    This code file (main.cpp) contains the main function that runs the game
-    all libraries that must be used have to be included here.
-*/
-
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "chessGame.h"
+#include "mainMenu.h"
 
 int main()
 {
-    ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff)); // sets the color of the background
-
-    sf::RenderWindow window(sf::VideoMode(768, 512), "Chess Project", sf::Style::Titlebar | sf::Style::Close); // defines the resolution and title of the window
-    window.setVerticalSyncEnabled(true);                                                                       //v-sync to normalize frames into monitor refresh rate
+    MainMenu menu;
+    ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff));
+    sf::RenderWindow window(sf::VideoMode(768, 512), "Chess Game", sf::Style::Titlebar | sf::Style::Close);
+    window.setVerticalSyncEnabled(true);
+    bool isGame = false;
+    // MainMenu menu;
 
     // appliaction starts here
     while (window.isOpen())
     {
-
         sf::Event event;
-
         while (window.pollEvent(event))
         {
 
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if (event.type == sf::Event::MouseButtonPressed)
+            // For Main Menu
+            if (!isGame)
             {
-                if (event.mouseButton.button == sf::Mouse::Left)
+
+                if (event.type == sf::Event::KeyReleased)
                 {
-                    if ((0 <= event.mouseButton.x) && (event.mouseButton.x <= 512) && (0 <= event.mouseButton.y) && (event.mouseButton.y <= 512))
+                    if (event.key.code == sf::Keyboard::Up)
                     {
-                        unsigned int buttonPos{(event.mouseButton.x / 64) + ((event.mouseButton.y / 64) * (8 * (512 / window.getSize().y)))};
-                        if (!chess.getSelected())
-                            chess.selectPiece(buttonPos);
-                        else
-                            chess.moveSelected(buttonPos);
+                        menu.moveUp();
                     }
-                    else if ((517 <= event.mouseButton.x) && (event.mouseButton.x <= 763) && (5 <= event.mouseButton.y) && (event.mouseButton.y <= 45))
+                    if (event.key.code == sf::Keyboard::Down)
                     {
-                        chess.restart();
+                        menu.moveDown();
+                    }
+                    if (event.key.code == sf::Keyboard::Enter)
+                    {
+                        if (menu.getSelectedMenu() == 0)
+                        {
+                            window.clear();
+                            isGame = true;
+                        }
+                        else
+                        {
+                            window.close();
+                        }
+                    }
+                }
+            }
+
+            // For GamePlay
+            else
+            {
+                if (event.type == sf::Event::MouseButtonPressed)
+                {
+                    if (event.mouseButton.button == sf::Mouse::Left)
+                    {
+                        if ((0 <= event.mouseButton.x) && (event.mouseButton.x <= 512) && (0 <= event.mouseButton.y) && (event.mouseButton.y <= 512))
+                        {
+                            unsigned int buttonPos{(event.mouseButton.x / 64) + ((event.mouseButton.y / 64) * (8 * (512 / window.getSize().y)))};
+                            if (!chess.getSelected())
+                                chess.selectPiece(buttonPos);
+                            else
+                                chess.moveSelected(buttonPos);
+                        }
+                        else if ((517 <= event.mouseButton.x) && (event.mouseButton.x <= 763) && (5 <= event.mouseButton.y) && (event.mouseButton.y <= 45))
+                        {
+                            chess.restart();
+                        }
                     }
                 }
             }
         }
-
-        window.draw(chess);
+        if (isGame)
+        {
+            window.draw(chess);
+        }
+        else
+        {
+            window.draw(menu);
+        }
         window.display();
     }
 }
