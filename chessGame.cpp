@@ -3,6 +3,8 @@
 */
 
 #include "chessGame.h"
+#include <chrono>
+#include <fstream>
 
 ChessGame::ChessGame(sf::Color bordCol1 = sf::Color::White, sf::Color bordCol2 = sf::Color::Black)
     : board(bordCol1, bordCol2)
@@ -48,7 +50,7 @@ ChessGame::ChessGame(sf::Color bordCol1 = sf::Color::White, sf::Color bordCol2 =
 
 void ChessGame::restart()
 {
-
+    startTime();
     selected = false;
     playerTurn = true;
     playerTurnCheck = false;
@@ -104,7 +106,7 @@ void ChessGame::updateInfo()
         if (playerTurnCheck)
         {
             if (playerTurn)
-                textSituation.setString("CHECKMATE\nBlack Wins");
+                textSituation.setString("CHECKMATE\nBlack Wins on");
             else
                 textSituation.setString("CHECKMATE\nWhite Wins");
         }
@@ -1944,5 +1946,43 @@ void ChessGame::checkMate()
     if (i == 16)
     {
         mate = true;
+        endTime();
+        saveDetail();
+    }
+}
+
+// TRACK TIME
+void ChessGame::startTime()
+{
+    begin = std::chrono::steady_clock::now();
+}
+
+void ChessGame::endTime()
+{
+    end = std::chrono::steady_clock::now();
+}
+
+std::chrono::seconds ChessGame::getElapsedTime()
+{
+    using namespace std::chrono;
+    return duration_cast<std::chrono::seconds>(end - begin);
+}
+
+void ChessGame::saveDetail()
+{
+    std::ofstream fp;
+    fp.open("recent.txt", std::ios::app);
+    if (!fp)
+    {
+        std::cerr << "Error Opening File!";
+        return;
+    }
+    if (playerTurn)
+    {
+        fp << "Black" << getElapsedTime().count();
+    }
+    else
+    {
+        fp << "White" << getElapsedTime().count();
     }
 }

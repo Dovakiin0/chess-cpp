@@ -12,6 +12,7 @@
 #include <iostream>
 #include "board.h"
 #include "piece.h"
+#include <chrono>
 
 class ChessGame : public sf::Drawable
 {
@@ -30,6 +31,16 @@ private:
     sf::Text textTurn;
     sf::Text textSituation;
     sf::Text textLastMove;
+
+    // Tracking time
+    std::chrono::steady_clock::time_point begin;
+    std::chrono::steady_clock::time_point end;
+    void startTime();
+    void endTime();
+    std::chrono::seconds getElapsedTime();
+
+    // Save Recent Detail
+    void saveDetail();
 
     bool selected;
     bool playerTurn; // true = White turn, false = Black Turn
