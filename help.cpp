@@ -2,13 +2,14 @@
 #include <SFML/Graphics.hpp>
 
 Help::Help()
+
 {
     background.loadFromFile("Textures/back.jpg");
     backSprite.setTexture(background);
     font.loadFromFile("Textures/times.ttf");
 
     title.setFont(font);
-    title.setString("Chess Game");
+    title.setString("Help Chess Game");
     title.setCharacterSize(50);
     title.setFillColor(sf::Color::White);
     title.setPosition(sf::Vector2f(512 / 2, 100));
@@ -30,7 +31,7 @@ Help::Help()
     helps[2].setString("Exitssss");
     helps[2].setCharacterSize(30);
     helps[2].setPosition(sf::Vector2f(512 / 2, 350));
-    selectedMenu = 0;
+    selectHelp = 0;
 }
 
 Help::~Help()
@@ -42,7 +43,7 @@ void Help::moveDown()
     if (selectHelp + 1 < MAX_MAIN_HELP || selectHelp + 2 < MAX_MAIN_HELP)
     {
         helps[selectHelp].setFillColor(sf::Color::White);
-        selectedMenu++;
+        selectHelp++;
         helps[selectHelp].setFillColor(sf::Color::Red);
     }
 }
@@ -52,7 +53,7 @@ void Help::moveUp()
     if (selectHelp - 1 >= 0 || selectHelp - 2 >= 0)
     {
         helps[selectHelp].setFillColor(sf::Color::Blue);
-        selectedMenu--;
+        selectHelp--;
         helps[selectHelp].setFillColor(sf::Color::Red);
     }
 }
