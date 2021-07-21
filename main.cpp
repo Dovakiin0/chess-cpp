@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "chessGame.h"
 #include "mainMenu.h"
+#include "help.h"
 
 int main()
 {
@@ -9,7 +10,12 @@ int main()
     ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff));
     sf::RenderWindow window(sf::VideoMode(768, 512), "Chess Game", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
+    
+    
+    Help help;
+    
     bool isGame = false;
+    bool isHelp=false;
     // MainMenu menu;
 
     // appliaction starts here
@@ -43,6 +49,12 @@ int main()
                             window.clear();
                             isGame = true;
                         }
+                    	
+                    	else if(menu.getSelectedMenu() == 1)
+                    	{
+                    		window.clear();
+                    		isHelp=true;
+						}
                         else
                         {
                             window.close();
@@ -50,6 +62,7 @@ int main()
                     }
                 }
             }
+            
 
             // For GamePlay
             else
@@ -78,6 +91,10 @@ int main()
         {
             window.draw(chess);
         }
+        else if(isHelp)
+        {
+        	window.draw(help);
+		}
         else
         {
             window.draw(menu);

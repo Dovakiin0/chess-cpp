@@ -1,27 +1,27 @@
-#ifndef _MAINMENU_H
-#define _MAINMENU_H
-#define MAX_MAIN_MENU 3
+#ifndef _HELP_H
+#define _HELP_H
+#define MAX_MAIN_HELP 3
 
 #include <SFML/Graphics.hpp>
 
-class MainMenu : public sf::Drawable
+class Help : public sf::Drawable
 {
 private:
     sf::Font font;
     sf::Text title;
-    sf::Text menu[MAX_MAIN_MENU];
+    sf::Text helps[MAX_MAIN_HELP];
     sf::Texture background;
     sf::Sprite backSprite;
-    int selectedMenu;
+    int selectHelp;
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 public:
-    MainMenu();
-    ~MainMenu();
+    Help();
+    ~Help();
 
     void moveUp();
     void moveDown();
-    int getSelectedMenu();
+    int getSelectedHelp();
 };
 
 #endif

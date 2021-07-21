@@ -3,13 +3,12 @@
 */
 
 #include "chessGame.h"
+#include <windows.h>
 
 ChessGame::ChessGame(sf::Color bordCol1 = sf::Color::White, sf::Color bordCol2 = sf::Color::Black)
     : board(bordCol1, bordCol2)
 {
-    // The code is taking account of these indexes.
-    // Changing them may brake normal chess rules.
-    // Comment out pieces if you want to remove some pieces at beggining.
+    
     font.loadFromFile("Textures/times.ttf");
 
     infoRestart.setFillColor(sf::Color::White);
@@ -209,9 +208,9 @@ bool ChessGame::selectPiece(int pos)
 
 void ChessGame::moveSelected(int pos)
 {
-    bool validMove{false};
+    bool validMove=false;
 
-    if ((selectedPiece == NULL) || !selected) //Probably doesnt need both
+    if ((selectedPiece == NULL) || !selected) 
         return;
 
     // Check pos with the Piece's possibleMoves
@@ -1348,13 +1347,13 @@ void ChessGame::calcPawnMoves(Piece *tmpPiece)
 
     tmpPiece->getPossibleMoves().clear();
 
-    int piecePos{tmpPiece->getPosition()};
+    int piecePos=tmpPiece->getPosition();
 
     if (tmpPiece->getPlayer())
     { // If pawn is white
-        if ((piecePos / 8) != 0)
+        if ((piecePos / 8) != 0)//not in the first row of the black
         {
-            int i{0};
+            int i;
             for (i = 0; i < 16; i++)
             {
                 if ((whitePieces[i].getPosition() == (piecePos - 8)) || (blackPieces[i].getPosition() == (piecePos - 8)))
@@ -1376,7 +1375,7 @@ void ChessGame::calcPawnMoves(Piece *tmpPiece)
                 }
             }
 
-            if ((piecePos % 8) != 0)
+            if ((piecePos % 8) != 0)//for the pieces toward the end of the board like right against the edge the left most piece and other pieces except the rightmost
             {
                 for (i = 0; i < 16; i++)
                 {
@@ -1393,7 +1392,7 @@ void ChessGame::calcPawnMoves(Piece *tmpPiece)
                 }
             }
 
-            if ((piecePos % 8) != 7)
+            if ((piecePos % 8) != 7)//for the rightmost piece and all the other pieces except the left most one
             {
                 for (i = 0; i < 16; i++)
                 {
@@ -1422,7 +1421,7 @@ void ChessGame::calcPawnMoves(Piece *tmpPiece)
 
         if ((piecePos / 8) != 7)
         {
-            int i{0};
+            int i=0;
             for (i = 0; i < 16; i++)
             {
                 if ((whitePieces[i].getPosition() == (piecePos + 8)) || (blackPieces[i].getPosition() == (piecePos + 8)))
@@ -1675,11 +1674,6 @@ void ChessGame::calcCastling(Piece *tmpPiece)
 
 void ChessGame::checkMate()
 {
-    // No more than two piece can check a King.
-    // A single check can be unchecked either by the King moving to
-    // a square that is not attacked, or if another piece blocks/kills the attacking piece
-    // A double check can be unchecked only by moving the checked King
-
     Piece *check1{NULL};
     Piece *check2{NULL};
 
@@ -1744,10 +1738,10 @@ void ChessGame::checkMate()
                 for (int i = 0; i < 16; i++)
                     if (whitePieces[i].getType() != 'K')
                         whitePieces[i].getPossibleMoves().clear();
-                    else
-                        for (int i = 0; i < 16; i++)
-                            if (blackPieces[i].getType() != 'K')
-                                blackPieces[i].getPossibleMoves().clear();
+            else
+                for (int i = 0; i < 16; i++)
+                    if (blackPieces[i].getType() != 'K')
+                        blackPieces[i].getPossibleMoves().clear();
         }
         else
         { // If single check
@@ -1814,7 +1808,7 @@ void ChessGame::checkMate()
         {
             if ((check1->getType() == 'Q') || (check1->getType() == 'R' || (check1->getType() == 'B')))
             {
-                int checkPos{check1->getPosition()};
+                int checkPos=check1->getPosition();
 
                 if ((check1->getType() == 'Q') || (check1->getType() == 'R'))
                 {
