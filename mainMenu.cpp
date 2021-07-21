@@ -24,10 +24,10 @@ MainMenu::MainMenu()
     menu[1].setString("Help");
     menu[1].setCharacterSize(30);
     menu[1].setPosition(sf::Vector2f(512 / 2, 300));
-      
-	menu[2].setFont(font);
+
+    menu[2].setFont(font);
     menu[2].setFillColor(sf::Color::White);
-    menu[2].setString("Exits");
+    menu[2].setString("Exit");
     menu[2].setCharacterSize(30);
     menu[2].setPosition(sf::Vector2f(512 / 2, 350));
     selectedMenu = 0;
