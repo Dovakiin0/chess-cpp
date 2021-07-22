@@ -63,6 +63,7 @@ int main()
             }
             if (isRecentPage)
             {
+                recent_page.loadDetail();
                 if (event.type == sf::Event::KeyReleased)
                 {
                     if (event.key.code == sf::Keyboard::Escape)

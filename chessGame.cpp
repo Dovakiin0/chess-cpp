@@ -1992,21 +1992,3 @@ void ChessGame::saveDetail()
     }
     fp.close();
 }
-
-void ChessGame::loadDetail()
-{
-    std::ifstream fp;
-    std::string name;
-    int second;
-    fp.open("recent.dat", std::ios::app);
-    while (!fp.eof())
-    {
-        fp >> name;
-        name_vec.push_back(name);
-        fp >> second;
-        sec_vec.push_back(second);
-    }
-    name_vec.pop_back();
-    sec_vec.pop_back();
-    fp.close();
-}
