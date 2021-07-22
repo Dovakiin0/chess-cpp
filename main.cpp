@@ -2,14 +2,18 @@
 #include <SFML/Graphics.hpp>
 #include "chessGame.h"
 #include "mainMenu.h"
+#include "recent.h"
 
 int main()
 {
     MainMenu menu;
+    Recent recent_page;
     ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff));
     sf::RenderWindow window(sf::VideoMode(768, 512), "Chess Game", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
+    bool isMenu = true;
     bool isGame = false;
+    bool isRecentPage = false;
     // MainMenu menu;
 
     // appliaction starts here
@@ -23,7 +27,7 @@ int main()
                 window.close();
 
             // For Main Menu
-            if (!isGame)
+            if (isMenu)
             {
 
                 if (event.type == sf::Event::KeyReleased)
@@ -41,7 +45,14 @@ int main()
                         if (menu.getSelectedMenu() == 0)
                         {
                             window.clear();
+                            isMenu = false;
                             isGame = true;
+                        }
+                        else if (menu.getSelectedMenu() == 1)
+                        {
+                            window.clear();
+                            isMenu = false;
+                            isRecentPage = true;
                         }
                         else
                         {
@@ -50,10 +61,32 @@ int main()
                     }
                 }
             }
+            if (isRecentPage)
+            {
+                recent_page.loadDetail();
+                if (event.type == sf::Event::KeyReleased)
+                {
+                    if (event.key.code == sf::Keyboard::Escape)
+                    {
+                        window.clear();
+                        isRecentPage = false;
+                        isMenu = true;
+                    }
+                }
+            }
 
             // For GamePlay
-            else
+            if (isGame)
             {
+                if (event.type == sf::Event::KeyReleased)
+                {
+                    if (event.key.code == sf::Keyboard::Escape)
+                    {
+                        window.clear();
+                        isGame = false;
+                        isMenu = true;
+                    }
+                }
                 if (event.type == sf::Event::MouseButtonPressed)
                 {
                     if (event.mouseButton.button == sf::Mouse::Left)
@@ -78,9 +111,13 @@ int main()
         {
             window.draw(chess);
         }
-        else
+        if (isMenu)
         {
             window.draw(menu);
+        }
+        if (isRecentPage)
+        {
+            window.draw(recent_page);
         }
         window.display();
     }
