@@ -66,8 +66,6 @@ void Recent::loadDetail()
         else
             records.resize(name_vec.size());
 
-        std::cout << records.size();
-
         if (!name_vec.empty())
         {
             for (int i = 0; i < records.size(); i++)
