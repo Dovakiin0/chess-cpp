@@ -1971,18 +1971,42 @@ std::chrono::seconds ChessGame::getElapsedTime()
 void ChessGame::saveDetail()
 {
     std::ofstream fp;
-    fp.open("recent.txt", std::ios::app);
+    fp.open("recent.dat", std::ios::app);
     if (!fp)
     {
         std::cerr << "Error Opening File!";
         return;
     }
+    int secs = getElapsedTime().count();
     if (playerTurn)
     {
-        fp << "Black" << getElapsedTime().count();
+        // BLACK
+        fp << "BLACK\t";
+        fp << secs << "\n";
     }
     else
     {
-        fp << "White" << getElapsedTime().count();
+        // WHITE
+        fp << "WHITE\t";
+        fp << secs << "\n";
     }
+    fp.close();
+}
+
+void ChessGame::loadDetail()
+{
+    std::ifstream fp;
+    std::string name;
+    int second;
+    fp.open("recent.dat", std::ios::app);
+    while (!fp.eof())
+    {
+        fp >> name;
+        name_vec.push_back(name);
+        fp >> second;
+        sec_vec.push_back(second);
+    }
+    name_vec.pop_back();
+    sec_vec.pop_back();
+    fp.close();
 }

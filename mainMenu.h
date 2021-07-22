@@ -1,6 +1,6 @@
 #ifndef _MAINMENU_H
 #define _MAINMENU_H
-#define MAX_MAIN_MENU 2
+#define MAX_MAIN_MENU 4
 
 #include <SFML/Graphics.hpp>
 

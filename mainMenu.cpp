@@ -21,9 +21,15 @@ MainMenu::MainMenu()
 
     menu[1].setFont(font);
     menu[1].setFillColor(sf::Color::White);
-    menu[1].setString("Exit");
+    menu[1].setString("Recent Match");
     menu[1].setCharacterSize(30);
     menu[1].setPosition(sf::Vector2f(512 / 2, 300));
+
+    menu[2].setFont(font);
+    menu[2].setFillColor(sf::Color::White);
+    menu[2].setString("Exit");
+    menu[2].setCharacterSize(30);
+    menu[2].setPosition(sf::Vector2f(512 / 2, 350));
     selectedMenu = 0;
 }
 
@@ -60,7 +66,7 @@ void MainMenu::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(backSprite);
     target.draw(title);
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < MAX_MAIN_MENU; i++)
     {
         target.draw(menu[i]);
     }

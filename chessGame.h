@@ -39,8 +39,11 @@ private:
     void endTime();
     std::chrono::seconds getElapsedTime();
 
-    // Save Recent Detail
+    // save details of recent games
+    std::vector<std::string> name_vec;
+    std::vector<int> sec_vec;
     void saveDetail();
+    void loadDetail();
 
     bool selected;
     bool playerTurn; // true = White turn, false = Black Turn
