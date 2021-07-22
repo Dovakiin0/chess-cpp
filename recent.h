@@ -7,16 +7,18 @@
 class Recent : public sf::Drawable
 {
 private:
+    bool loaded = false;
     sf::Font font;
     sf::Text title;
     sf::Text header;
-    sf::Text records[5];
+    std::vector<sf::Text> records;
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
     std::vector<std::string> name_vec;
     std::vector<int> sec_vec;
 
 public:
     void loadDetail();
+    void cleanUp();
     Recent();
     ~Recent();
 };

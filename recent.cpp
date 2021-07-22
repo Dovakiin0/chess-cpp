@@ -19,48 +19,75 @@ Recent::Recent()
     header.setCharacterSize(35);
     header.setFillColor(sf::Color::White);
     header.setPosition(sf::Vector2f(512 / 2, 100));
+
+    cleanUp();
 }
 
-Recent::~Recent() {}
+Recent::~Recent()
+{
+}
 
 void Recent::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(title);
     target.draw(header);
-    for (auto &rec : records)
+    for (int i = 0; i < records.size(); i++)
     {
-        target.draw(rec);
+        target.draw(records.at(i));
     }
 }
 
 void Recent::loadDetail()
 {
-    std::ifstream fp;
-    std::string name;
-    int second;
-    fp.open("recent.dat", std::ios::app);
-    while (!fp.eof())
+    if (!loaded)
     {
-        fp >> name;
-        name_vec.push_back(name);
-        fp >> second;
-        sec_vec.push_back(second);
-    }
-    name_vec.pop_back();
-    sec_vec.pop_back();
-    std::reverse(name_vec.begin(), name_vec.end());
-    std::reverse(sec_vec.begin(), sec_vec.end());
-    fp.close();
 
-    int pos = 150;
+        std::ifstream fp;
+        std::string name;
+        int second;
+        fp.open("recent.dat", std::ios::app);
+        while (!fp.eof())
+        {
+            fp >> name;
+            name_vec.push_back(name);
+            fp >> second;
+            sec_vec.push_back(second);
+        }
+        name_vec.pop_back();
+        sec_vec.pop_back();
+        std::reverse(name_vec.begin(), name_vec.end());
+        std::reverse(sec_vec.begin(), sec_vec.end());
+        fp.close();
 
-    for (int i = 0; i < 5; i++)
-    {
-        records[i].setFont(font);
-        records[i].setString(name_vec.at(i) + "\t\t" + std::to_string(sec_vec.at(i)) + " sec");
-        records[i].setCharacterSize(30);
-        records[i].setFillColor(sf::Color::White);
-        records[i].setPosition(sf::Vector2f(512 / 2, pos));
-        pos += 50;
+        int pos = 150;
+
+        if (name_vec.size() > 5)
+            records.resize(5);
+        else
+            records.resize(name_vec.size());
+
+        std::cout << records.size();
+
+        if (!name_vec.empty())
+        {
+            for (int i = 0; i < records.size(); i++)
+            {
+                records.at(i).setFont(font);
+                records.at(i).setString(name_vec.at(i) + "\t\t" + std::to_string(sec_vec.at(i)) + " sec");
+                records.at(i).setCharacterSize(30);
+                records.at(i).setFillColor(sf::Color::White);
+                records.at(i).setPosition(sf::Vector2f(512 / 2, pos));
+                pos += 50;
+            }
+            loaded = true;
+        }
     }
+}
+
+void Recent::cleanUp()
+{
+    records.clear();
+    name_vec.clear();
+    sec_vec.clear();
+    loaded = false;
 }

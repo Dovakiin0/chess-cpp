@@ -71,6 +71,7 @@ int main()
                         window.clear();
                         isRecentPage = false;
                         isMenu = true;
+                        recent_page.cleanUp();
                     }
                 }
             }
