@@ -11,11 +11,12 @@ private:
     sf::Text title;
     sf::Text helps[MAX_MAIN_HELP];
     sf::Texture background;
-    sf::Sprite backSprite;
+    
     int selectHelp;
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 public:
+	sf::Sprite backSprite;
     Help();
     ~Help();
 

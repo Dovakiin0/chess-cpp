@@ -7,7 +7,9 @@
 int main()
 {
     MainMenu menu;
+    
     ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff));
+    
     sf::RenderWindow window(sf::VideoMode(768, 512), "Chess Game", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
     
@@ -93,8 +95,66 @@ int main()
         }
         else if(isHelp)
         {
-        	window.draw(help);
-		}
+        	sf::RenderWindow windows(sf::VideoMode(1200, 630), "Chess Game Tutorial", sf::Style::Titlebar | sf::Style::Close);
+    		windows.setVerticalSyncEnabled(true);
+        	windows.draw(help);
+        	
+        	
+        	
+        	while (windows.isOpen())
+		    {
+        		sf::Event events;
+		        while (windows.pollEvent(events))
+		        {
+		
+		            if (events.type == sf::Event::Closed)
+		                {
+		                	windows.close();
+		                	isHelp=false;
+						}
+		                
+					    if (events.type == sf::Event::KeyReleased)
+			                {
+			                    if (events.key.code == sf::Keyboard::Up)
+			                    {
+			                        help.moveUp();
+			                    }
+			                    if (events.key.code == sf::Keyboard::Down)
+			                    {
+			                        help.moveDown();
+			                    }
+			                    if (events.key.code == sf::Keyboard::Enter)
+			                    {
+			                        if (help.getSelectedHelp() == 0)
+			                        {
+			                            windows.clear();
+			                            isHelp = false;
+			                            window.draw(menu);
+			                        }
+			                    	
+			                    	else if(help.getSelectedHelp() == 1)
+			                    	{
+			                    		windows.clear();
+			                    		isHelp=true;
+									}
+			                        else
+			                        {
+			                        	isHelp=false;
+			                            windows.close();
+			                        }
+			                    }
+			                }
+						
+        	
+					}
+					
+					if(isHelp==true)
+						{
+						windows.draw(help);
+						windows.display();
+						}
+				}
+			}
         else
         {
             window.draw(menu);
