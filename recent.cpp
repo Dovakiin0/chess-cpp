@@ -6,19 +6,23 @@
 
 Recent::Recent()
 {
-    font.loadFromFile("Textures/times.ttf");
+    background.loadFromFile("Textures/recentbg.jpg");
+    backSprite.setTexture(background);
+    backSprite.setColor(sf::Color(255, 255, 255, 100));
+
+    font.loadFromFile("Textures/DK-Lemon-Yellow-Sun.ttf");
 
     title.setFont(font);
     title.setString("Recent Matches");
     title.setCharacterSize(50);
     title.setFillColor(sf::Color::White);
-    title.setPosition(sf::Vector2f(512 / 2.5, 10));
+    title.setPosition(sf::Vector2f(250, 10));
 
     header.setFont(font);
     header.setString("Player\t\tTime");
     header.setCharacterSize(35);
     header.setFillColor(sf::Color::White);
-    header.setPosition(sf::Vector2f(512 / 2, 100));
+    header.setPosition(sf::Vector2f(270, 100));
 
     cleanUp();
 }
@@ -29,6 +33,7 @@ Recent::~Recent()
 
 void Recent::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    target.draw(backSprite);
     target.draw(title);
     target.draw(header);
     for (int i = 0; i < records.size(); i++)
@@ -41,11 +46,10 @@ void Recent::loadDetail()
 {
     if (!loaded)
     {
-
         std::ifstream fp;
         std::string name;
         int second;
-        fp.open("recent.dat", std::ios::app);
+        fp.open("recent.dat");
         while (!fp.eof())
         {
             fp >> name;
@@ -59,7 +63,7 @@ void Recent::loadDetail()
         std::reverse(sec_vec.begin(), sec_vec.end());
         fp.close();
 
-        int pos = 150;
+        int pos = 190;
 
         if (name_vec.size() > 5)
             records.resize(5);
@@ -71,10 +75,10 @@ void Recent::loadDetail()
             for (int i = 0; i < records.size(); i++)
             {
                 records.at(i).setFont(font);
-                records.at(i).setString(name_vec.at(i) + "\t\t" + std::to_string(sec_vec.at(i)) + " sec");
-                records.at(i).setCharacterSize(30);
+                records.at(i).setString(name_vec.at(i) + "\t\t\t\t\t" + std::to_string(sec_vec.at(i)) + " sec");
+                records.at(i).setCharacterSize(20);
                 records.at(i).setFillColor(sf::Color::White);
-                records.at(i).setPosition(sf::Vector2f(512 / 2, pos));
+                records.at(i).setPosition(sf::Vector2f(270, pos));
                 pos += 50;
             }
             loaded = true;

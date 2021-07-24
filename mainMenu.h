@@ -12,6 +12,11 @@ private:
     sf::Text menu[MAX_MAIN_MENU];
     sf::Texture background;
     sf::Sprite backSprite;
+
+    sf::Texture arrowbg;
+    sf::Sprite arrow;
+
+    int arrpos = 190;
     int selectedMenu;
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 

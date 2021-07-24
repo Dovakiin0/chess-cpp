@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "chessGame.h"
 #include "mainMenu.h"
+#include "help.h"
 #include "recent.h"
 
 int main()
@@ -9,8 +10,13 @@ int main()
     MainMenu menu;
     Recent recent_page;
     ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff));
+
     sf::RenderWindow window(sf::VideoMode(768, 512), "Chess Game", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
+
+    Help help;
+
+    bool isHelp = false;
     bool isMenu = true;
     bool isGame = false;
     bool isRecentPage = false;
@@ -48,6 +54,13 @@ int main()
                             isMenu = false;
                             isGame = true;
                         }
+
+                        else if (menu.getSelectedMenu() == 2)
+                        {
+                            window.clear();
+                            isHelp = true;
+                            isMenu = false;
+                        }
                         else if (menu.getSelectedMenu() == 1)
                         {
                             window.clear();
@@ -72,6 +85,26 @@ int main()
                         isRecentPage = false;
                         isMenu = true;
                         recent_page.cleanUp();
+                    }
+                }
+            }
+            if (isHelp)
+            {
+                if (event.type == sf::Event::KeyReleased)
+                {
+                    if (event.key.code == sf::Keyboard::Escape)
+                    {
+                        window.clear();
+                        isMenu = true;
+                        isHelp = false;
+                    }
+                    if (event.key.code == sf::Keyboard::Right)
+                    {
+                        help.nextPage();
+                    }
+                    if (event.key.code == sf::Keyboard::Left)
+                    {
+                        help.prevPage();
                     }
                 }
             }
@@ -119,6 +152,10 @@ int main()
         if (isRecentPage)
         {
             window.draw(recent_page);
+        }
+        if (isHelp)
+        {
+            window.draw(help);
         }
         window.display();
     }

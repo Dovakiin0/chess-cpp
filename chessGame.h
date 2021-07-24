@@ -44,9 +44,9 @@ private:
 
     bool selected;
     bool playerTurn; // true = White turn, false = Black Turn
-    bool playerTurnCheck;
+    bool playerTurnCheck;//shows true for White's turn
     bool mate;
-    int turn;
+    int turn;//1 then 2 then 3 ....
 
     void createMovesSquares();
 
