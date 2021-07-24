@@ -4,7 +4,7 @@
 Help::Help()
 
 {
-    background.loadFromFile("Textures/chess-playing-hand.jpg");
+    background.loadFromFile("Textures/helpbg.jpg");
     backSprite.setTexture(background);
     backSprite.setColor(sf::Color(255, 255, 255, 10)); // half transparent
 
@@ -13,7 +13,7 @@ Help::Help()
     title.setFont(font);
     title.setString("Tutorial !!!");
     title.setStyle(sf::Text::Bold | sf::Text::Underlined);
-	title.setCharacterSize(40);
+    title.setCharacterSize(40);
     title.setFillColor(sf::Color::White);
     title.setPosition(sf::Vector2f(512 / 2, 100));
 
@@ -30,8 +30,8 @@ Help::Help()
     helps[1].setStyle(sf::Text::Bold);
     helps[1].setCharacterSize(30);
     helps[1].setPosition(sf::Vector2f(20, 300));
-      
-	helps[2].setFont(font);
+
+    helps[2].setFont(font);
     helps[2].setFillColor(sf::Color::White);
     helps[2].setString("Exit");
     helps[2].setStyle(sf::Text::Bold);
@@ -58,7 +58,7 @@ void Help::moveUp()
 {
     if (selectHelp - 1 >= 0 || selectHelp - 2 >= 0)
     {
-        helps[selectHelp].setFillColor(sf::Color(255,155,0));
+        helps[selectHelp].setFillColor(sf::Color(255, 155, 0));
         selectHelp--;
         helps[selectHelp].setFillColor(sf::Color::Green);
     }

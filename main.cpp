@@ -3,21 +3,23 @@
 #include "chessGame.h"
 #include "mainMenu.h"
 #include "help.h"
+#include "recent.h"
 
 int main()
 {
     MainMenu menu;
-    
+    Recent recent_page;
     ChessGame chess(sf::Color(0xf3bc7aff), sf::Color(0xae722bff));
-    
+
     sf::RenderWindow window(sf::VideoMode(768, 512), "Chess Game", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
-    
-    
+
     Help help;
-    
+
+    bool isHelp = false;
+    bool isMenu = true;
     bool isGame = false;
-    bool isHelp=false;
+    bool isRecentPage = false;
     // MainMenu menu;
 
     // appliaction starts here
@@ -31,7 +33,7 @@ int main()
                 window.close();
 
             // For Main Menu
-            if (!isGame)
+            if (isMenu)
             {
 
                 if (event.type == sf::Event::KeyReleased)
@@ -49,14 +51,22 @@ int main()
                         if (menu.getSelectedMenu() == 0)
                         {
                             window.clear();
+                            isMenu = false;
                             isGame = true;
                         }
-                    	
-                    	else if(menu.getSelectedMenu() == 1)
-                    	{
-                    		window.clear();
-                    		isHelp=true;
-						}
+
+                        else if (menu.getSelectedMenu() == 2)
+                        {
+                            window.clear();
+                            isHelp = true;
+                            isMenu = false;
+                        }
+                        else if (menu.getSelectedMenu() == 1)
+                        {
+                            window.clear();
+                            isMenu = false;
+                            isRecentPage = true;
+                        }
                         else
                         {
                             window.close();
@@ -64,11 +74,53 @@ int main()
                     }
                 }
             }
-            
+            if (isRecentPage)
+            {
+                recent_page.loadDetail();
+                if (event.type == sf::Event::KeyReleased)
+                {
+                    if (event.key.code == sf::Keyboard::Escape)
+                    {
+                        window.clear();
+                        isRecentPage = false;
+                        isMenu = true;
+                        recent_page.cleanUp();
+                    }
+                }
+            }
+            if (isHelp)
+            {
+                if (event.type == sf::Event::KeyReleased)
+                {
+                    if (event.key.code == sf::Keyboard::Escape)
+                    {
+                        window.clear();
+                        isMenu = true;
+                        isHelp = false;
+                    }
+                    if (event.key.code == sf::Keyboard::Up)
+                    {
+                        help.moveUp();
+                    }
+                    if (event.key.code == sf::Keyboard::Down)
+                    {
+                        help.moveDown();
+                    }
+                }
+            }
 
             // For GamePlay
-            else
+            if (isGame)
             {
+                if (event.type == sf::Event::KeyReleased)
+                {
+                    if (event.key.code == sf::Keyboard::Escape)
+                    {
+                        window.clear();
+                        isGame = false;
+                        isMenu = true;
+                    }
+                }
                 if (event.type == sf::Event::MouseButtonPressed)
                 {
                     if (event.mouseButton.button == sf::Mouse::Left)
@@ -93,71 +145,17 @@ int main()
         {
             window.draw(chess);
         }
-        else if(isHelp)
-        {
-        	sf::RenderWindow windows(sf::VideoMode(1200, 630), "Chess Game Tutorial", sf::Style::Titlebar | sf::Style::Close);
-    		windows.setVerticalSyncEnabled(true);
-        	windows.draw(help);
-        	
-        	
-        	
-        	while (windows.isOpen())
-		    {
-        		sf::Event events;
-		        while (windows.pollEvent(events))
-		        {
-		
-		            if (events.type == sf::Event::Closed)
-		                {
-		                	windows.close();
-		                	isHelp=false;
-						}
-		                
-					    if (events.type == sf::Event::KeyReleased)
-			                {
-			                    if (events.key.code == sf::Keyboard::Up)
-			                    {
-			                        help.moveUp();
-			                    }
-			                    if (events.key.code == sf::Keyboard::Down)
-			                    {
-			                        help.moveDown();
-			                    }
-			                    if (events.key.code == sf::Keyboard::Enter)
-			                    {
-			                        if (help.getSelectedHelp() == 0)
-			                        {
-			                            windows.clear();
-			                            isHelp = false;
-			                            window.draw(menu);
-			                        }
-			                    	
-			                    	else if(help.getSelectedHelp() == 1)
-			                    	{
-			                    		windows.clear();
-			                    		isHelp=true;
-									}
-			                        else
-			                        {
-			                        	isHelp=false;
-			                            windows.close();
-			                        }
-			                    }
-			                }
-						
-        	
-					}
-					
-					if(isHelp==true)
-						{
-						windows.draw(help);
-						windows.display();
-						}
-				}
-			}
-        else
+        if (isMenu)
         {
             window.draw(menu);
+        }
+        if (isRecentPage)
+        {
+            window.draw(recent_page);
+        }
+        if (isHelp)
+        {
+            window.draw(help);
         }
         window.display();
     }
