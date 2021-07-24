@@ -41,11 +41,10 @@ void Recent::loadDetail()
 {
     if (!loaded)
     {
-
         std::ifstream fp;
         std::string name;
         int second;
-        fp.open("recent.dat", std::ios::app);
+        fp.open("recent.dat");
         while (!fp.eof())
         {
             fp >> name;

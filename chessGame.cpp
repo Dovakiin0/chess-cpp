@@ -104,7 +104,7 @@ void ChessGame::updateInfo()
         if (playerTurnCheck)
         {
             if (playerTurn)
-                textSituation.setString("CHECKMATE\nBlack Wins on");
+                textSituation.setString("CHECKMATE\nBlack Wins");
             else
                 textSituation.setString("CHECKMATE\nWhite Wins");
         }
