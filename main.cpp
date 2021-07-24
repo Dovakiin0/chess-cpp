@@ -98,13 +98,13 @@ int main()
                         isMenu = true;
                         isHelp = false;
                     }
-                    if (event.key.code == sf::Keyboard::Up)
+                    if (event.key.code == sf::Keyboard::Right)
                     {
-                        help.moveUp();
+                        help.nextPage();
                     }
-                    if (event.key.code == sf::Keyboard::Down)
+                    if (event.key.code == sf::Keyboard::Left)
                     {
-                        help.moveDown();
+                        help.prevPage();
                     }
                 }
             }

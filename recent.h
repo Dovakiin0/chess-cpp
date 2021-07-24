@@ -10,6 +10,8 @@ private:
     bool loaded = false;
     sf::Font font;
     sf::Text title;
+    sf::Sprite backSprite;
+    sf::Texture background;
     sf::Text header;
     std::vector<sf::Text> records;
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
